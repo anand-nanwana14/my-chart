@@ -4,7 +4,7 @@ api:
     tag: v1
   port: 3000
   replicas: 1
-  database_url: "192.168.49.2"
+  database_url: "rest-api-chart-postgres"
   postgres_db: "mydatabase"
   postgres_user: "postgres"
   postgres_password: "postgres"
