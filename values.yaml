@@ -2,7 +2,7 @@ api:
   image: anandnanwana14/rest-api-helm:v1
   port: 3000
   replicas: 1
-  database_url: "postgres://postgres:postgres@192.168.49.2:5432/mydatabase"
+  database_url: "192.168.49.2"
   postgres_db: "mydatabase"
   postgres_user: "postgres"
   postgres_password: "postgres"
@@ -11,6 +11,4 @@ postgres:
   image: postgres:14
   port: 5432
   replicas: 1
-  database: "mydatabase"
-  username: "postgres"
-  password: "postgres"
+  
