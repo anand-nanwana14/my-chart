@@ -1,5 +1,7 @@
 api:
-  image: anandnanwana14/rest-api-helm:v1
+  image:
+    repository: anandnanwana14/rest-api-helm
+    tag: v1
   port: 3000
   replicas: 1
   database_url: "192.168.49.2"
@@ -8,7 +10,9 @@ api:
   postgres_password: "postgres"
 
 postgres:
-  image: postgres:14
+  image:
+    repository: postgres
+    tag: 14
   port: 5432
   replicas: 1
   
