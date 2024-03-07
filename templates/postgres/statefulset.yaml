@@ -1,10 +1,9 @@
-# ./my-api-postgres-chart/templates/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}-postgres
 spec:
-  replicas: 1
+  replicas: {{ .Values.postgres.replicas }}
   serviceName: {{ .Release.Name }}-postgres
   selector:
     matchLabels:
@@ -16,12 +15,15 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: {{ .Values.postgres.image }}
+          image: {{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
           ports:
             - containerPort: {{ .Values.postgres.port }}
           envFrom:
             - secretRef:
-                name: {{ .Release.Name }}-postgres-secret
+                name: {{ .Release.Name }}-postgres
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data  
   volumeClaimTemplates:
     - metadata:
         name: data
