@@ -33,7 +33,7 @@ spec:
         periodSeconds: {{ .Values.api.readinessProbe.periodSeconds }}
       livenessProbe:
         httpGet:
-          path: /health
+          path: /messages
           port: {{ .Values.api.port }}
         initialDelaySeconds: {{ .Values.api.livenessProbe.initialDelaySeconds }}
         periodSeconds: {{ .Values.api.livenessProbe.periodSeconds }}
