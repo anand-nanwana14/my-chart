@@ -19,4 +19,21 @@ spec:
             - containerPort: {{ .Values.api.port }}
           envFrom:
             - secretRef:
-                name: {{ .Release.Name }}-api
+                name: {{ .Release.Name }}-api   
+      autoscaling:
+        enabled: true
+        minReplicas: {{ .Values.api.autoscaling.minReplicas }}
+        maxReplicas: {{ .Values.api.autoscaling.maxReplicas }}
+        targetCPUUtilizationPercentage: {{ .Values.api.autoscaling.targetCPUUtilizationPercentage }}
+      readinessProbe:
+        httpGet:
+          path: /messages
+          port: {{ .Values.api.port }}
+        initialDelaySeconds: {{ .Values.api.readinessProbe.initialDelaySeconds }}
+        periodSeconds: {{ .Values.api.readinessProbe.periodSeconds }}
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: {{ .Values.api.port }}
+        initialDelaySeconds: {{ .Values.api.livenessProbe.initialDelaySeconds }}
+        periodSeconds: {{ .Values.api.livenessProbe.periodSeconds }}
