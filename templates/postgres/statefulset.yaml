@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Release.Name }}-postgres
+  name: {{ template "postgreschart.fullname" . }}-postgres
 spec:
   replicas: {{ .Values.postgres.replicas }}
-  serviceName: {{ .Release.Name }}-postgres
+  serviceName: {{ template "postgreschart.fullname" . }}-postgres
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-postgres
+      app: {{ template "postgreschart.fullname" . }}-postgres
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-postgres
+        app: {{ template "postgreschart.fullname" . }}-postgres
     spec:
       containers:
         - name: postgres
-          image: {{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
+          image: {{ template "postgreschart.image" . }}
           ports:
             - containerPort: {{ .Values.postgres.port }}
           envFrom:
             - secretRef:
-                name: {{ .Release.Name }}-postgres
+                name: {{ template "postgreschart.secretName" . }}
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data  
