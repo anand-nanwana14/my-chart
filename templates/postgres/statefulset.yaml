@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "postgreschart.fullname" . }}-postgres
+spec:
+  replicas: {{ .Values.postgres.replicas }}
+  serviceName: {{ template "postgreschart.fullname" . }}-postgres
+  selector:
+    matchLabels:
+      app: {{ template "postgreschart.fullname" . }}-postgres
+  template:
+    metadata:
+      labels:
+        app: {{ template "postgreschart.fullname" . }}-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: {{ template "postgreschart.image" . }}
+          ports:
+            - containerPort: {{ .Values.postgres.port }}
+          envFrom:
+            - secretRef:
+                name: {{ template "postgreschart.secretName" . }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data  
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

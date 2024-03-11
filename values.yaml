@@ -1,0 +1,28 @@
+api:
+  image:
+    repository: anandnanwana14/rest-api-helm
+    tag: v1
+  port: 3000
+  replicas: 1
+  database_url: "rest-api-chart-postgres"
+  postgres_db: "mydatabase"
+  postgres_user: "postgres"
+  postgres_password: "postgres"
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+  readinessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 5
+  livenessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
+
+postgres:
+  image:
+    repository: postgres
+    tag: 14
+  port: 5432
+  replicas: 1
