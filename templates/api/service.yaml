@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-api
+  name: {{ template "mychart.fullname" . }}-api
 spec:
   selector:
-    app: {{ .Release.Name }}-api
+    app: {{ template "mychart.fullname" . }}-api
   ports:
     - protocol: TCP
       port: {{ .Values.api.port }}
